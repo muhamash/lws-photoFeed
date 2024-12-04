@@ -1,7 +1,13 @@
+import { getApiPhotos } from "@/lib/image-data";
 import { NextResponse } from "next/server";
-import { getAllPhotos } from "@/lib/image-data";
 
 export async function GET() {
-    const data = await getAllPhotos();
-    return NextResponse.json(data); 
+  try {
+    const data = await getApiPhotos();
+    // console.log("API data:", data);
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Error fetching API photos:", error);
+    return NextResponse.json({ error: "Failed to fetch photos" }, { status: 500 });
+  }
 }
